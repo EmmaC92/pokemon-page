@@ -1,0 +1,16 @@
+FROM php:8.2-apache
+
+RUN apt-get update && apt-get install -y \
+        wget \
+        vim \
+        git
+
+RUN curl -sS https://getcomposer.org/installer | php \
+	&& mv composer.phar /usr/bin/composer
+
+RUN pecl install xdebug \
+	&& docker-php-ext-enable xdebug
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+WORKDIR /var/www/html

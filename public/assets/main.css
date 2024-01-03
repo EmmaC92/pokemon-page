@@ -1,0 +1,33 @@
+.pokemon_list, .pokemon_render {
+    display: block;
+}
+
+.pokemon_render {
+    margin: 0 20px;
+}
+
+.pokemon_match {
+    display: flex;
+}
+
+.image_pokemon_render, .description_pokemon_render {
+    border: solid 1px;
+    border-radius: 5px;
+}
+
+.description_pokemon_render {
+    display: flex;
+    width: fit-content;
+}
+
+.image_pokemon_render {
+    margin: 20px;
+    padding: 20px;
+    background-color: yellow;
+}
+
+.stat_pokemon_render, .type_pokemon_render, .attack_pokemon_render {
+    border: 1px solid;
+    border-radius: 1px;
+    margin: 0;
+}

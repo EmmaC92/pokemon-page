@@ -1,0 +1,22 @@
+{
+    "name": "vendor/poke-api",
+    "description": "Pokemon get resource from PokeAPI",
+    "authors": [
+        {
+            "name": "Emma",
+            "email": "camuschinox@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "autoload" : {
+        "psr-4": {
+            "Acme\\": "src/"
+        },
+        "files": [
+            "src/App/Config/Middleware.php"
+        ]
+    }
+}

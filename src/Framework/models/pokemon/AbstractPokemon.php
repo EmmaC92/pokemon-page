@@ -1,0 +1,55 @@
+<?php
+
+namespace Acme\Framework\models\pokemon;
+
+abstract class AbstractPokemon
+{
+    public function __construct(
+        protected string $name,
+        protected string $image,
+        protected int $id
+    ) {
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name): abstractPokemon
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): abstractPokemon
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+}
