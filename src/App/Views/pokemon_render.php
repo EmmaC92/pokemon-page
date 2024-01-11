@@ -1,33 +1,38 @@
-<div class="pokemon_render">
-    <h1 class="name_pokemon_render"> <?php echo "#{$newPokemon->getId()} | {$newPokemon->getName()}" ?> </h1>
-    <div class="description_pokemon_render">
-        <div>
-            <img class="image_pokemon_render" height="100" src="<?php echo $newPokemon->getImage() ?>" title="<?php echo $newPokemon->getName() ?>">
-        </div>
-        <div class="properties_pokemon_render">
-            <ul class="stat_pokemon_render">
-                <h4>Stats</h4>
+<h1>Pokémon Details</h1>
+<h1> <?php echo "#{$newPokemon->getId()} | {$newPokemon->getName()}" ?> </h1>
+
+<div class="pokemon-details">
+    <img src="<?php echo $newPokemon->getImage() ?>" alt="Pokémon Image" class="pokemon-image" title="<?php echo $newPokemon->getName() ?>">
+
+    <div class="pokemon-statistics">
+        <div class="stats">
+            <h2>Stats</h2>
+            <ul>
                 <?php foreach ($newPokemon->getStats() as $key => $stat) : ?>
                     <li>
                         <?php echo "$key: $stat." ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
-            <ul class="type_pokemon_render">
-                <h4>Types</h4>
+        </div>
 
-                <?php foreach ($newPokemon->getTypes() as $type) : ?>
-                    <li>
-                        <?php echo $type ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <ul class="attack_pokemon_render">
-                <h4>Attacks</h4>
-
+        <div class="movements">
+            <h2>Movements</h2>
+            <ul>
                 <?php foreach ($newPokemon->getAttacks() as $attack) : ?>
                     <li>
                         <?php echo $attack ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+        <div class="types">
+            <h2>Types</h2>
+            <ul>
+                <?php foreach ($newPokemon->getTypes() as $type) : ?>
+                    <li>
+                        <?php echo $type ?>
                     </li>
                 <?php endforeach; ?>
             </ul>

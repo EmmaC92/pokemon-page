@@ -23,7 +23,7 @@ class Container
     {
         $refrectionClass = new ReflectionClass($className);
 
-        if(!$refrectionClass->isInstantiable()) {
+        if (!$refrectionClass->isInstantiable()) {
             throw new ContainerException("Class {$className} is not instantiable.");
         }
 
