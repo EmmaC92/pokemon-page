@@ -6,6 +6,7 @@ namespace Acme\App\Controllers;
 
 use Acme\Framework\utils\Randomizer;
 use Acme\Framework\TemplateEngine;
+use Acme\App\Services\ValidationService;
 
 class HomeController
 {
@@ -14,7 +15,8 @@ class HomeController
 
     public function __construct(
         private Randomizer $randomizer,
-        private TemplateEngine $views
+        private TemplateEngine $views,
+        private ValidationService $validator
     ) {
     }
 
@@ -33,10 +35,7 @@ class HomeController
 
     private function checkAndRetrieveParams(): string|null
     {
-        if (!isset($_GET[self::POKEMON_ID])) {
-            return null;
-        }
-
-        return $_GET[self::POKEMON_ID];
+        $this->validator->validateId($_GET);
+        return array_key_exists(self::POKEMON_ID, $_GET) ? $_GET[self::POKEMON_ID] : null;
     }
 }

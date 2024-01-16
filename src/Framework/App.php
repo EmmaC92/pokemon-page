@@ -67,7 +67,7 @@ class App
             $frontErrorMessage = 'list of pokemon is empty.';
         } catch (\Exception $ex) {
             error_log("ERROR: " . $ex->getMessage());
-            $frontErrorMessage = 'Unknown Error.';
+            $frontErrorMessage = 'Unknown Error. ' . $ex->getMessage();
         } finally {
             if (isset($frontErrorMessage)) {
                 echo $this->views->render('/error.php', [

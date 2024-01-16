@@ -6,18 +6,18 @@ use Acme\Framework\utils\{
     PokemonFileManager,
     Randomizer
 };
+use Acme\Framework\exceptions\InvalidPokemonIdException;
 use Acme\Framework\exceptions\EmptyListException;
 use Acme\Framework\TemplateEngine;
-use Acme\App\Config\Paths;
-
-use Acme\Framework\exceptions\InvalidPokemonIdException;
+use Acme\App\Services\ValidationService;
 
 class ListController
 {
     private const POKEMON_IDS = 'pokemonIds';
     public function __construct(
         private Randomizer $randomizer,
-        private TemplateEngine $views
+        private TemplateEngine $views,
+        private ValidationService $validator
     ) {
     }
 
