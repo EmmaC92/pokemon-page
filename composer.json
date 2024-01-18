@@ -9,14 +9,18 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "vlucas/phpdotenv": "^5.6@dev"
     },
-    "autoload" : {
+    "autoload": {
         "psr-4": {
             "Acme\\": "src/"
         },
         "files": [
             "src/App/Config/Middleware.php"
         ]
+    },
+    "scripts": {
+        "pokecli": "php cli.php"
     }
 }

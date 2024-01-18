@@ -9,8 +9,12 @@ use Acme\App\Config\{
     Routes,
     Paths
 };
+use Dotenv\Dotenv;
 
 use function Acme\App\Config\registerMiddleware;
+
+$dotenv = Dotenv::createImmutable(Paths::ROOT);
+$dotenv->load();
 
 $app = new App(Paths::SOURCE . "App/container-definitions.php")  ;
 

@@ -5,11 +5,17 @@ RUN apt-get update && apt-get install -y \
         vim \
         git
 
+RUN apt-get update \
+    && docker-php-ext-install mysqli pdo pdo_mysql \
+    && docker-php-ext-enable pdo_mysql
+
 RUN curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/bin/composer
 
 RUN pecl install xdebug \
 	&& docker-php-ext-enable xdebug
+
+RUN a2enmod rewrite
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
