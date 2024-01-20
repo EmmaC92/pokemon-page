@@ -66,7 +66,7 @@ class Container
         }
 
         $factory = $this->definitions[$id];
-        $dependency = $factory();
+        $dependency = $factory($this);
 
         if (array_key_exists($id, $this->resolved)) {
             return $this->resolved[$id];

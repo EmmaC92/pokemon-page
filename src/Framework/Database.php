@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Acme\Framework;
 
-use PDO, PDOException;
+use PDO, PDOException, PDOStatement;
 
 class Database
 {
 
     private PDO $connection;
+    private PDOStatement $stmt;
 
     public function __construct(
         string $driver,
@@ -32,8 +33,12 @@ class Database
         return $this->connection;
     }
 
-    public function query(string $query)
+    public function query(string $query, array $params = []): Database
     {
-        $this->connection->query($query);
+        $this->stmt = $this->connection->prepare($query);
+
+        $this->stmt->execute($params);
+
+        return $this;
     }
 }
