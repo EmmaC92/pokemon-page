@@ -5,10 +5,15 @@ declare(strict_types=1);
 use Acme\Framework\TemplateEngine;
 use Acme\App\Config\Paths;
 use Acme\Framework\utils\Randomizer;
-use Acme\App\Services\ValidationService;
-use Acme\App\Services\MatchService;
 use Acme\Framework\Container;
 use Acme\Framework\Database;
+
+// services
+use Acme\App\Services\{
+    ValidationService,
+    MatchService,
+    PokemonService
+};
 
 return [
     TemplateEngine::class => fn () => new TemplateEngine(Paths::VIEW),
@@ -27,5 +32,11 @@ return [
         $db = $container->get(Database::class);
 
         return new MatchService($db);
-    }
+    },
+    PokemonService::class => function (Container $container) {
+        $db = $container->get(Database::class);
+
+        return new PokemonService($db);
+    },
+
 ];

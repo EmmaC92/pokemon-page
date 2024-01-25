@@ -7,7 +7,8 @@ abstract class AbstractPokemon
     public function __construct(
         protected string $name,
         protected string $image,
-        protected int $id
+        protected int $pokedexIndex,
+        protected ?int $id = null,
     ) {
     }
 
@@ -49,6 +50,25 @@ abstract class AbstractPokemon
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * Get the value of pokedexIndex
+     */
+    public function getPokedexIndex()
+    {
+        return $this->pokedexIndex;
+    }
+
+    /**
+     * Set the value of pokedexIndex
+     *
+     * @return  self
+     */
+    public function setPokedexIndex($pokedexIndex)
+    {
+        $this->pokedexIndex = $pokedexIndex;
 
         return $this;
     }

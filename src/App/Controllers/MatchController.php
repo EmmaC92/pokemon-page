@@ -4,7 +4,10 @@ namespace Acme\App\Controllers;
 
 use Acme\Framework\TemplateEngine;
 use Acme\Framework\utils\Randomizer;
-use Acme\App\Services\MatchService;
+use Acme\App\Services\{
+    MatchService,
+    PokemonService
+};
 use Acme\Framework\models\pokemon\TrainingPokemon;
 
 class MatchController
@@ -12,6 +15,7 @@ class MatchController
     public function __construct(
         private Randomizer $randomizer,
         private MatchService $matchService,
+        private PokemonService $pokemonService,
         private TemplateEngine $views
     ) {
     }
@@ -20,6 +24,10 @@ class MatchController
     {
         $first = $this->randomizer->getTrainingPokemon();
         $second = $this->randomizer->getTrainingPokemon();
+
+        $this->pokemonService->savePokemon($first);
+        $this->pokemonService->savePokemon($second);
+
         $attempt = [];
 
         while ($this->checkHp($first, $second)) {

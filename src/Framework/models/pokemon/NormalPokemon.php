@@ -9,12 +9,18 @@ class NormalPokemon extends AbstractPokemon
     public function __construct(
         string $name,
         string $image,
-        int $id,
+        int $pokedexIndex,
         protected array $stats,
         protected array $types,
         protected array $attacks,
+        protected ?int $id = null,
     ) {
-        parent::__construct($name, $image, $id);
+        parent::__construct(
+            id: $id,
+            name: $name,
+            image: $image,
+            pokedexIndex: $pokedexIndex
+        );
     }
 
     /**

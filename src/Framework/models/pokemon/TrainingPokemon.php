@@ -12,12 +12,22 @@ class TrainingPokemon extends NormalPokemon implements TraineePokemonInterface
     public function __construct(
         string $name,
         string $image,
-        int $id,
+        int $pokedexIndex,
         array $stats,
         array $types,
         array $attacks,
+        ?int $id = null,
     ) {
-        parent::__construct($name, $image, $id, $stats, $types, $attacks);
+        parent::__construct(
+            id: $id,
+            name: $name,
+            image: $image,
+            pokedexIndex: $pokedexIndex,
+            stats: $stats,
+            types: $types,
+            attacks: $attacks
+        );
+
         $this->stats['hp_left'] = $this->stats['hp'];
     }
 

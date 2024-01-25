@@ -16,16 +16,17 @@ class MatchService
 
     public function saveNewMatch(TrainingPokemon $first, TrainingPokemon $second, string $who_won): void
     {
-        $query = "INSERT INTO 
-                    pokemon_ico.pokemon_match (first_pokemon, second_pokemon, who_won) 
-                  VALUES (:first_pokemon, :second_pokemon, :who_won)";
+        $query =
+            "INSERT INTO 
+                    pokemon_ico.pokemon_match (first_pokemon_id, second_pokemon_id, who_won) 
+                  VALUES (:first_pokemon_id, :second_pokemon_id, :who_won)";
 
         $params = [
-            'first_pokemon' => $first->getName(),
-            'second_pokemon' => $second->getName(),
+            'first_pokemon_id' => $first->getId(),
+            'second_pokemon_id' => $second->getId(),
             'who_won' => $who_won,
         ];
 
-        $this->db->query($query, $params);
+        $this->db->simpleQuery($query, $params);
     }
 }

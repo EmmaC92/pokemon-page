@@ -60,7 +60,7 @@ class Randomizer
         return new NormalPokemon(
             name: $name,
             image: $imageUrl,
-            id: $id,
+            pokedexIndex: $id,
             stats: $stats,
             types: $types,
             attacks: $attacks
@@ -76,7 +76,7 @@ class Randomizer
         return new TrainingPokemon(
             name: $name,
             image: $imageUrl,
-            id: $id,
+            pokedexIndex: $id,
             stats: $stats,
             types: $types,
             attacks: $attacks

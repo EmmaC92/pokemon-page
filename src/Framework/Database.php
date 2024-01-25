@@ -33,12 +33,23 @@ class Database
         return $this->connection;
     }
 
-    public function query(string $query, array $params = []): Database
+    public function simpleQuery(string $query, array $params = []): Database
+    {
+        $this->query($query, $params);
+        return $this;
+    }
+
+    public function insertQuery(string $query, array $params = []): string
+    {
+        $this->query($query, $params);
+        $newId = $this->connection->lastInsertId();
+
+        return $newId;
+    }
+
+    private function query(string $query, array $params = []): void
     {
         $this->stmt = $this->connection->prepare($query);
-
         $this->stmt->execute($params);
-
-        return $this;
     }
 }

@@ -1,5 +1,5 @@
 <h1>Pokémon Details</h1>
-<h1> <?php echo "#{$newPokemon->getId()} | {$newPokemon->getName()}" ?> </h1>
+<h1> <?php echo "#{$newPokemon->getPokedexIndex()} | {$newPokemon->getName()}" ?> </h1>
 
 <div class="pokemon-details">
     <img src="<?php echo $newPokemon->getImage() ?>" alt="Pokémon Image" class="pokemon-image" title="<?php echo $newPokemon->getName() ?>">
