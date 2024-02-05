@@ -18,6 +18,11 @@ class Randomizer
      */
     public $guzzleHttpClient;
 
+    private const POKEMON_ID_RANGE = [
+        'first_id' => 1,
+        'last_id' => 386
+    ];
+
     /**
      * first pokemon generation 
      * @var int
@@ -87,7 +92,7 @@ class Randomizer
     {
         $this->checkRangeId($slug);
 
-        if ($generation !== null) {
+        if (!is_null($generation)) {
             $slug = match ($generation) {
                 self::FIRST_GENERATION => $this->getRandomFirstGenerationPokemonId(),
                 self::SECOND_GENERATION => $this->getRandomSecondGenerationPokemonId(),
@@ -112,8 +117,9 @@ class Randomizer
         ];
     }
 
-    private function checkRangeId($id){
-        if ($id === '' || (is_numeric($id) && ($id < 1 || $id > 381))) {
+    private function checkRangeId($id)
+    {
+        if (empty($id) || (is_numeric($id) && ($id < self::POKEMON_ID_RANGE['first_id'] || $id > self::POKEMON_ID_RANGE['last_id']))) {
             throw new InvalidPokemonIdException;;
         }
     }
@@ -121,7 +127,7 @@ class Randomizer
     private function getStats(Object $pokemonDetails): array
     {
         $statsArray = [];
-        array_map(function ($statObject) use (&$statsArray){
+        array_map(function ($statObject) use (&$statsArray) {
             return $statsArray[$statObject->stat->name] =  $statObject->base_stat;
         }, $pokemonDetails?->stats);
 
