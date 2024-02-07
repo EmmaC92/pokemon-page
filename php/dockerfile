@@ -19,4 +19,7 @@ RUN a2enmod rewrite
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+RUN ln -sf /dev/stdout /var/log/apache2/access_pokemon.log \
+    && ln -sf /dev/stderr /var/log/apache2/error_pokemon.log
+
 WORKDIR /var/www/html

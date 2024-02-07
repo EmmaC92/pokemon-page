@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-use Acme\Framework\TemplateEngine;
-use Acme\App\Config\Paths;
+// utils and framework
 use Acme\Framework\utils\Randomizer;
-use Acme\Framework\Container;
-use Acme\Framework\Database;
+use Acme\App\Config\Paths;
+use Acme\Framework\{
+    TemplateEngine,
+    Container,
+    Database
+};
 
 // services
 use Acme\App\Services\{
@@ -15,10 +18,18 @@ use Acme\App\Services\{
     PokemonService
 };
 
-return [
+// repositories
+use Acme\App\Repository\{
+    MatchRepository,
+    PokemonRepository,
+};
+
+/**
+ * Utils and Fremework instances
+ */
+$utils = [
     TemplateEngine::class => fn () => new TemplateEngine(Paths::VIEW),
     Randomizer::class => fn () => new Randomizer(),
-    ValidationService::class => fn () => new ValidationService(),
     Database::class => fn () => new Database(
         $_ENV['DB_DRIVER'],
         [
@@ -28,15 +39,47 @@ return [
         $_ENV['DB_USERNAME'],
         $_ENV['DB_PASSWORD']
     ),
-    MatchService::class => function (Container $container) {
-        $db = $container->get(Database::class);
+];
 
-        return new MatchService($db);
+/**
+ * Services instances
+ */
+$services = [
+    ValidationService::class => fn () => new ValidationService(),
+    MatchService::class => function (Container $container) {
+        $matchRepository = $container->get(MatchRepository::class);
+        $randomizer = $container->get(Randomizer::class);
+        $pokemonService = $container->get(PokemonService::class);
+
+        return new MatchService($matchRepository, $randomizer, $pokemonService);
     },
     PokemonService::class => function (Container $container) {
+        $pokemonRepository = $container->get(PokemonRepository::class);
+
+        return new PokemonService($pokemonRepository);
+    },
+];
+
+/**
+ * Repositories instances
+ */
+$repositories = [
+    MatchRepository::class => function (Container $container) {
         $db = $container->get(Database::class);
 
-        return new PokemonService($db);
+        return new MatchRepository($db);
     },
+    PokemonRepository::class => function (Container $container) {
+        $db = $container->get(Database::class);
 
+        return new PokemonRepository($db);
+    },
 ];
+
+$instances = array_merge(
+    $utils,
+    $services,
+    $repositories,
+);
+
+return $instances;

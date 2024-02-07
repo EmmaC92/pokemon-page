@@ -119,8 +119,8 @@ class Randomizer
 
     private function checkRangeId($id)
     {
-        if (empty($id) || (is_numeric($id) && ($id < self::POKEMON_ID_RANGE['first_id'] || $id > self::POKEMON_ID_RANGE['last_id']))) {
-            throw new InvalidPokemonIdException;;
+        if ($id === '' || (is_numeric($id) && ($id < self::POKEMON_ID_RANGE['first_id'] || $id > self::POKEMON_ID_RANGE['last_id']))) {
+            throw new InvalidPokemonIdException;
         }
     }
 

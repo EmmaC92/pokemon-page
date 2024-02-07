@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Acme\Framework;
 
-class TemplateEngine 
+class TemplateEngine
 {
     private array $globalArrayTemplate = [];
-    public function __construct(private string $basePath)
-    {
+
+    public function __construct(
+        private string $basePath
+    ) {
     }
-    
+
     public function render(string $template, array $data = [])
     {
         extract($data, EXTR_SKIP);
+
         extract($this->globalArrayTemplate, EXTR_SKIP);
 
         ob_start();
