@@ -13,7 +13,9 @@ use Acme\App\Services\ValidationService;
 
 class ListController
 {
+
     private const POKEMON_IDS = 'pokemonIds';
+
     public function __construct(
         private Randomizer $randomizer,
         private TemplateEngine $views,
@@ -35,7 +37,7 @@ class ListController
         ]);
     }
 
-    private function checkAndRetrieveParams(): array|string
+    public function checkAndRetrieveParams(): array|string
     {
         if (!isset($_GET[self::POKEMON_IDS])) {
             throw new InvalidPokemonIdException();
