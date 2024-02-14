@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Acme\App\Controllers;
 
 use Acme\Framework\utils\{
@@ -9,56 +11,40 @@ use Acme\Framework\utils\{
 use Acme\Framework\exceptions\InvalidPokemonIdException;
 use Acme\Framework\exceptions\EmptyListException;
 use Acme\Framework\TemplateEngine;
-use Acme\App\Services\ValidationService;
+use Acme\App\Services\ListService;
 
 class ListController
 {
-
-    private const POKEMON_IDS = 'pokemonIds';
-
     public function __construct(
         private Randomizer $randomizer,
         private TemplateEngine $views,
-        private ValidationService $validator
+        private ListService $listService
     ) {
     }
 
     public function addPokemonToList(): void
     {
-        $ids = $this->checkAndRetrieveParams();
-        $pokemonArray = $this->randomizer->getPokemons($ids);
-        foreach ($pokemonArray as $newPokemon) {
-            PokemonFileManager::writeNewPokemon($newPokemon);
-        }
+        $ids = $this->listService->checkAndRetrieveParams();
+        $pokemonArray = $this->listService->addPokemonToList($ids);
 
-        echo $this->views->render('/home.php', [
+        $this->render('/home.php', [
             'pokemonArray' => $pokemonArray,
             'title' => 'Pokemon App | Add pokemon'
         ]);
     }
 
-    public function checkAndRetrieveParams(): array|string
-    {
-        if (!isset($_GET[self::POKEMON_IDS])) {
-            throw new InvalidPokemonIdException();
-        }
-
-        return $_GET[self::POKEMON_IDS];
-    }
-
     public function getPokemonList(): void
     {
-        $pokemonNameArray = PokemonFileManager::ReadPokemonFromList();
+        $pokemonArray = $this->listService->getPokemonList();
 
-        if (empty($pokemonNameArray)) {
-            throw new EmptyListException;
-        }
-
-        $pokemonArray = $this->randomizer->getPokemons($pokemonNameArray);
-
-        echo $this->views->render('/home.php', [
+        $this->render('/home.php', [
             'pokemonArray' => $pokemonArray,
             'title' => 'Pokemon App | List'
         ]);
+    }
+
+    private function render(string $template, array $params): void
+    {
+        echo $this->views->render($template, $params);
     }
 }

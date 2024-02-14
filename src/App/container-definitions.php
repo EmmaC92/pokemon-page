@@ -15,7 +15,8 @@ use Acme\Framework\{
 use Acme\App\Services\{
     ValidationService,
     MatchService,
-    PokemonService
+    PokemonService,
+    ListService
 };
 
 // repositories
@@ -57,6 +58,11 @@ $services = [
         $pokemonRepository = $container->get(PokemonRepository::class);
 
         return new PokemonService($pokemonRepository);
+    },
+    ListService::class => function (Container $container) {
+        $randomizer = $container->get(Randomizer::class);
+
+        return new ListService($randomizer);
     },
 ];
 

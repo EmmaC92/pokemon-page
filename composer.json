@@ -21,7 +21,8 @@
         ]
     },
     "scripts": {
-        "pokecli": "php cli.php"
+        "pokecli": "php cli.php",
+        "test": "./vendor/bin/phpunit src/App/Tests"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.1@dev"

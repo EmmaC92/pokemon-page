@@ -7,7 +7,7 @@ namespace Acme\App\Services;
 use Acme\App\Repository\MatchRepository;
 use Acme\App\Services\PokemonService;
 use Acme\Framework\utils\Randomizer;
-use Acme\Framework\models\pokemon\TrainingPokemon;
+use Acme\Framework\interfaces\TraineePokemonInterface;
 
 class MatchService
 {
@@ -18,7 +18,7 @@ class MatchService
     ) {
     }
 
-    public function createTrainingPokemonsForMatch()
+    public function createTrainingPokemonsForMatch(): array
     {
         $first = $this->randomizer->getTrainingPokemon();
         $second = $this->randomizer->getTrainingPokemon();
@@ -49,7 +49,7 @@ class MatchService
         return $attempt;
     }
 
-    private function saveNewMatch(TrainingPokemon $first, TrainingPokemon $second, string $who_won): void
+    private function saveNewMatch(TraineePokemonInterface $first, TraineePokemonInterface $second, string $who_won): void
     {
         $params = [
             'first_pokemon_id' => $first->getId(),
@@ -60,12 +60,12 @@ class MatchService
         $this->matchRepository->insertMatch($params);
     }
 
-    public function whoWon(TrainingPokemon $first, TrainingPokemon $second): string
+    public function whoWon(TraineePokemonInterface $first, TraineePokemonInterface $second): string
     {
         return $first->getStats('hp_left') > 0 ? 'first' : ($second->getStats('hp_left') > 0 ? 'second' : 'draw');
     }
 
-    private function checkHp(TrainingPokemon $first, TrainingPokemon $second): bool
+    private function checkHp(TraineePokemonInterface $first, TraineePokemonInterface $second): bool
     {
         return $first->getStats('hp_left') > 0 && $second->getStats('hp_left') > 0;
     }
