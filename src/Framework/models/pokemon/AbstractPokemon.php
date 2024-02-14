@@ -37,7 +37,7 @@ abstract class AbstractPokemon
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -47,7 +47,7 @@ abstract class AbstractPokemon
      *
      * @return  self
      */
-    public function setId($id)
+    public function setId($id): abstractPokemon
     {
         $this->id = $id;
         return $this;
