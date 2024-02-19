@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 // utils and framework
 use Acme\Framework\utils\Randomizer;
+use Acme\Framework\utils\TrainingPokemonGenerator;
 use Acme\App\Config\Paths;
 use Acme\Framework\{
     TemplateEngine,
@@ -13,6 +14,7 @@ use Acme\Framework\{
 
 use Acme\Framework\Contracts\{
     TemplateEngineInterface,
+    TrainingPokemonGeneratorInterface
 };
 
 // services
@@ -39,6 +41,7 @@ use Acme\App\Repository\{
 $utils = [
     TemplateEngineInterface::class => fn () => new TemplateEngine(Paths::VIEW),
     PokemonGeneratorInterface::class => fn () => new Randomizer(),
+    TrainingPokemonGeneratorInterface::class => fn () => new TrainingPokemonGenerator(),
     Database::class => fn () => new Database(
         $_ENV['DB_DRIVER'],
         [
@@ -57,11 +60,15 @@ $services = [
     ValidationService::class => fn () => new ValidationService(),
     MatchService::class => function (Container $container) {
 
-        $matchRepository  = $container->get(MatchRepository::class);
-        $pokemonGenerator = $container->get(PokemonGeneratorInterface::class);
-        $pokemonService   = $container->get(PokemonService::class);
+        $matchRepository          = $container->get(MatchRepository::class);
+        $trainingPokemonGenerator = $container->get(TrainingPokemonGeneratorInterface::class);
+        $pokemonService           = $container->get(PokemonService::class);
 
-        return new MatchService($matchRepository, $pokemonGenerator, $pokemonService);
+        return new MatchService(
+            matchRepository: $matchRepository,
+            pokemonService: $pokemonService,
+            trainingPokemonGenerator: $trainingPokemonGenerator
+        );
     },
     PokemonService::class => function (Container $container) {
         $pokemonRepository = $container->get(PokemonRepository::class);

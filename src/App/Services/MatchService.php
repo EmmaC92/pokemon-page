@@ -7,21 +7,21 @@ namespace Acme\App\Services;
 use Acme\App\Repository\MatchRepository;
 use Acme\App\Services\PokemonService;
 use Acme\Framework\interfaces\TraineePokemonInterface;
-use Acme\App\Contracts\PokemonGeneratorInterface;
+use Acme\Framework\Contracts\TrainingPokemonGeneratorInterface;
 
 class MatchService
 {
     public function __construct(
-        private MatchRepository $matchRepository,
-        private PokemonGeneratorInterface $pokemonGenerator,
         private PokemonService $pokemonService,
+        private MatchRepository $matchRepository,
+        private TrainingPokemonGeneratorInterface $trainingPokemonGenerator,
     ) {
     }
 
     public function createTrainingPokemonsForMatch(): array
     {
-        $first = $this->pokemonGenerator->getTrainingPokemon();
-        $second = $this->pokemonGenerator->getTrainingPokemon();
+        $first = $this->trainingPokemonGenerator->getTrainingPokemon();
+        $second = $this->trainingPokemonGenerator->getTrainingPokemon();
 
         $this->pokemonService->savePokemon($first);
         $this->pokemonService->savePokemon($second);

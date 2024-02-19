@@ -3,10 +3,9 @@
 namespace Acme\Framework\utils;
 
 use Acme\Framework\models\pokemon\{
+
     NormalPokemon,
-    TrainingPokemon
 };
-use Acme\Framework\interfaces\TraineePokemonInterface;
 use Acme\Framework\client\GuzzleHttpClient;
 use Acme\Framework\exceptions\InvalidPokemonIdException;
 use Acme\App\Contracts\PokemonGeneratorInterface;
@@ -50,23 +49,7 @@ class Randomizer implements PokemonGeneratorInterface
         );
     }
 
-    public function getTrainingPokemon(string|int $slug = null, int $generation = null): TraineePokemonInterface
-    {
-        $arrayParameters = $this->getPokemonParameters($slug, $generation);
-
-        extract($arrayParameters);
-
-        return new TrainingPokemon(
-            name: $name,
-            image: $imageUrl,
-            pokedexIndex: $id,
-            stats: $stats,
-            types: $types,
-            attacks: $attacks
-        );
-    }
-
-    private function getPokemonParameters(string|int $slug = null, int $generation = null): array
+    protected function getPokemonParameters(string|int $slug = null, int $generation = null): array
     {
         $this->checkRangeId($slug);
 
