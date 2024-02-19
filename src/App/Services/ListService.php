@@ -5,24 +5,26 @@ declare(strict_types=1);
 namespace Acme\App\Services;
 
 use Acme\Framework\utils\{
-    PokemonFileManager,
-    Randomizer
+
+    PokemonFileManager
 };
+use Acme\App\Contracts\PokemonGeneratorInterface;
 use Acme\Framework\exceptions\InvalidPokemonIdException;
 use Acme\Framework\exceptions\EmptyListException;
+use Acme\App\Contracts\ListServiceInterface;
 
-class ListService
+class ListService implements ListServiceInterface
 {
     private const POKEMON_IDS = 'pokemonIds';
 
     public function __construct(
-        private Randomizer $randomizer
+        private PokemonGeneratorInterface $pokemonGenerator
     ) {
     }
 
     public function addPokemonToList(array $ids): array
     {
-        $pokemonArray = $this->randomizer->getPokemons($ids);
+        $pokemonArray = $this->pokemonGenerator->getPokemons($ids);
         foreach ($pokemonArray as $newPokemon) {
             PokemonFileManager::writeNewPokemon($newPokemon);
         }
@@ -30,16 +32,18 @@ class ListService
         return $pokemonArray;
     }
 
-    public function checkAndRetrieveParams(): array|string
+    public function checkPokemonIds(mixed $params = null): array|string
     {
-        if (!isset($_GET[self::POKEMON_IDS])) {
+        $params = $_GET;
+
+        if (!isset($params[self::POKEMON_IDS])) {
             throw new InvalidPokemonIdException();
         }
 
-        return str_contains($_GET[self::POKEMON_IDS], ',') ?
-            explode(',', str_replace(' ', '', $_GET[self::POKEMON_IDS]))
+        return str_contains($params[self::POKEMON_IDS], ',') ?
+            explode(',', str_replace(' ', '', $params[self::POKEMON_IDS]))
             :
-            $_GET[self::POKEMON_IDS];
+            $params[self::POKEMON_IDS];
     }
 
     public function getPokemonList(): array
@@ -50,6 +54,6 @@ class ListService
             throw new EmptyListException;
         }
 
-        return $this->randomizer->getPokemons($pokemonNameArray);
+        return $this->pokemonGenerator->getPokemons($pokemonNameArray);
     }
 }

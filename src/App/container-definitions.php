@@ -8,7 +8,11 @@ use Acme\App\Config\Paths;
 use Acme\Framework\{
     TemplateEngine,
     Container,
-    Database
+    Database,
+};
+
+use Acme\Framework\Contracts\{
+    TemplateEngineInterface,
 };
 
 // services
@@ -17,6 +21,10 @@ use Acme\App\Services\{
     MatchService,
     PokemonService,
     ListService
+};
+use Acme\App\Contracts\{
+    ListServiceInterface,
+    PokemonGeneratorInterface,
 };
 
 // repositories
@@ -29,8 +37,8 @@ use Acme\App\Repository\{
  * Utils and Fremework instances
  */
 $utils = [
-    TemplateEngine::class => fn () => new TemplateEngine(Paths::VIEW),
-    Randomizer::class => fn () => new Randomizer(),
+    TemplateEngineInterface::class => fn () => new TemplateEngine(Paths::VIEW),
+    PokemonGeneratorInterface::class => fn () => new Randomizer(),
     Database::class => fn () => new Database(
         $_ENV['DB_DRIVER'],
         [
@@ -48,21 +56,22 @@ $utils = [
 $services = [
     ValidationService::class => fn () => new ValidationService(),
     MatchService::class => function (Container $container) {
-        $matchRepository = $container->get(MatchRepository::class);
-        $randomizer = $container->get(Randomizer::class);
-        $pokemonService = $container->get(PokemonService::class);
 
-        return new MatchService($matchRepository, $randomizer, $pokemonService);
+        $matchRepository  = $container->get(MatchRepository::class);
+        $pokemonGenerator = $container->get(PokemonGeneratorInterface::class);
+        $pokemonService   = $container->get(PokemonService::class);
+
+        return new MatchService($matchRepository, $pokemonGenerator, $pokemonService);
     },
     PokemonService::class => function (Container $container) {
         $pokemonRepository = $container->get(PokemonRepository::class);
 
         return new PokemonService($pokemonRepository);
     },
-    ListService::class => function (Container $container) {
-        $randomizer = $container->get(Randomizer::class);
+    ListServiceInterface::class => function (Container $container) {
+        $pokemonGenerator = $container->get(PokemonGeneratorInterface::class);
 
-        return new ListService($randomizer);
+        return new ListService($pokemonGenerator);
     },
 ];
 

@@ -1,6 +1,6 @@
 <?php
-include $this->resolve('partials/_navbar.php');
-include $this->resolve('partials/_head.php');
+                        include $this->resolvePath('partials/_navbar.php');
+                        include $this->resolvePath('partials/_head.php');
 ?>
 
 <html>

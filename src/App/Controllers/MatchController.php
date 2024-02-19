@@ -2,16 +2,16 @@
 
 namespace Acme\App\Controllers;
 
-use Acme\Framework\TemplateEngine;
 use Acme\App\Services\{
     MatchService
 };
+use Acme\Framework\Contracts\TemplateEngineInterface;
 
 class MatchController
 {
     public function __construct(
         private MatchService $matchService,
-        private TemplateEngine $views
+        private TemplateEngineInterface $views
     ) {
     }
 
@@ -21,7 +21,7 @@ class MatchController
 
         $attempt = $this->matchService->startMatch($trainingPokemons);
 
-        echo $this->views->render('/match.php', [
+        echo $this->views->renderView('/match.php', [
             'pokemonArray' => $trainingPokemons,
             'attempt' => $attempt,
             'title' => 'Pokemon App | Match'

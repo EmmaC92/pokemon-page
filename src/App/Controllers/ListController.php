@@ -4,30 +4,23 @@ declare(strict_types=1);
 
 namespace Acme\App\Controllers;
 
-use Acme\Framework\utils\{
-    PokemonFileManager,
-    Randomizer
-};
-use Acme\Framework\exceptions\InvalidPokemonIdException;
-use Acme\Framework\exceptions\EmptyListException;
-use Acme\Framework\TemplateEngine;
-use Acme\App\Services\ListService;
+use Acme\Framework\Contracts\TemplateEngineInterface;
+use Acme\App\Contracts\ListServiceInterface;
 
 class ListController
 {
     public function __construct(
-        private Randomizer $randomizer,
-        private TemplateEngine $views,
-        private ListService $listService
+        private TemplateEngineInterface $views,
+        private ListServiceInterface $listService
     ) {
     }
 
     public function addPokemonToList(): void
     {
-        $ids = $this->listService->checkAndRetrieveParams();
+        $ids = $this->listService->checkPokemonIds();
         $pokemonArray = $this->listService->addPokemonToList($ids);
 
-        $this->render('/home.php', [
+        $this->views->renderView('/home.php', [
             'pokemonArray' => $pokemonArray,
             'title' => 'Pokemon App | Add pokemon'
         ]);
@@ -37,14 +30,9 @@ class ListController
     {
         $pokemonArray = $this->listService->getPokemonList();
 
-        $this->render('/home.php', [
+        $this->views->renderView('/home.php', [
             'pokemonArray' => $pokemonArray,
             'title' => 'Pokemon App | List'
         ]);
-    }
-
-    private function render(string $template, array $params): void
-    {
-        echo $this->views->render($template, $params);
     }
 }

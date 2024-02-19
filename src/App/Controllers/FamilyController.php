@@ -2,15 +2,15 @@
 
 namespace Acme\App\Controllers;
 
-use Acme\Framework\TemplateEngine;
-use Acme\Framework\utils\Randomizer;
+use Acme\App\Contracts\PokemonGeneratorInterface;
 use Acme\Framework\models\pokemon\PokemonIterable;
+use Acme\Framework\Contracts\TemplateEngineInterface;
 
 class FamilyController
 {
     public function __construct(
-        private Randomizer $randomizer,
-        private TemplateEngine $views
+        private PokemonGeneratorInterface $pokemonGenerator,
+        private TemplateEngineInterface $views
     ) {
     }
 
@@ -28,7 +28,7 @@ class FamilyController
             $this->pokemonArray[] = $pokemon;
         }
 
-        echo $this->views->render('/home.php', [
+        $this->views->renderView('/home.php', [
             'pokemonArray' => $this->pokemonArray,
             'title' => 'Pokemon App | Family'
         ]);
@@ -37,7 +37,7 @@ class FamilyController
     private function checkAndRetrieveParams(): string|int
     {
         if (!isset($_GET[self::POKEMON_ID])) {
-            return $this->randomizer->getRandomPokemonId();
+            return $this->pokemonGenerator->getRandomPokemonId();
         }
 
         return $_GET[self::POKEMON_ID];

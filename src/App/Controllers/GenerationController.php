@@ -2,8 +2,8 @@
 
 namespace Acme\App\Controllers;
 
-use Acme\Framework\TemplateEngine;
-use Acme\Framework\utils\Randomizer;
+use Acme\App\Contracts\PokemonGeneratorInterface;
+use Acme\Framework\Contracts\TemplateEngineInterface;
 use Acme\Framework\exceptions\InvalidPokemonIdException;
 
 class GenerationController
@@ -11,17 +11,17 @@ class GenerationController
     
     private const POKEMON_GENERATION = 'pokemonGeneration';
     public function __construct(
-        private Randomizer $randomizer,
-        private TemplateEngine $views
+        private PokemonGeneratorInterface $pokemonGenerator,
+        private TemplateEngineInterface $views
     ) {
     }
 
     public function getPokemonByGeneration()
     {
         $generation = $this->checkAndRetrieveParams();
-        $pokemonArray[] = $this->randomizer->getPokemon(null, $generation);
+        $pokemonArray[] = $this->pokemonGenerator->getPokemon(null, $generation);
 
-        echo $this->views->render('/home.php', [
+        $this->views->renderView('/home.php', [
             'pokemonArray' => $pokemonArray,
             'title' => 'Pokemon App | Generation'
         ]);

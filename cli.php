@@ -32,6 +32,7 @@ try {
 
     $db->getConnection()->commit();
 } catch (\Exception $e) {
+    error_log("ERROR: " . $e->getMessage());
     if ($db->getConnection()->inTransaction()) {
         $db->getConnection()->rollBack();
         echo ("transaction failed");

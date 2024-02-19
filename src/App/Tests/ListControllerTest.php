@@ -19,7 +19,7 @@ class ListControllerTest extends TestCase
     public function test_checkAndRetrieveParams_returntype_string()
     {
         $_GET['pokemonIds'] = '10';
-        $result = $this->serviceInstance->checkAndRetrieveParams();
+        $result = $this->serviceInstance->checkPokemonIds();
         $expect = '10';
 
         $this->assertIsString($result);
@@ -29,7 +29,7 @@ class ListControllerTest extends TestCase
     public function test_checkAndRetrieveParams_returntype_array()
     {
         $_GET['pokemonIds'] = '10,10';
-        $result = $this->serviceInstance->checkAndRetrieveParams();
+        $result = $this->serviceInstance->checkPokemonIds();
         $expect = [
             '10',
             '10'
@@ -43,7 +43,7 @@ class ListControllerTest extends TestCase
     {
         unset($_GET['pokemonIds']);
         $this->expectException(InvalidPokemonIdException::class);
-        $this->serviceInstance->checkAndRetrieveParams();
+        $this->serviceInstance->checkPokemonIds();
     }
 
     public function test_getPokemonList_is_array()

@@ -70,7 +70,7 @@ class App
             $frontErrorMessage = 'Unknown Error. ' . $ex->getMessage();
         } finally {
             if (isset($frontErrorMessage)) {
-                echo $this->views->render('/error.php', [
+                echo $this->views->renderView('/error.php', [
                     'frontErrorMessage' => $frontErrorMessage
                 ]);
             }

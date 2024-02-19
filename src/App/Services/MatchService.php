@@ -6,22 +6,22 @@ namespace Acme\App\Services;
 
 use Acme\App\Repository\MatchRepository;
 use Acme\App\Services\PokemonService;
-use Acme\Framework\utils\Randomizer;
 use Acme\Framework\interfaces\TraineePokemonInterface;
+use Acme\App\Contracts\PokemonGeneratorInterface;
 
 class MatchService
 {
     public function __construct(
         private MatchRepository $matchRepository,
-        private Randomizer $randomizer,
+        private PokemonGeneratorInterface $pokemonGenerator,
         private PokemonService $pokemonService,
     ) {
     }
 
     public function createTrainingPokemonsForMatch(): array
     {
-        $first = $this->randomizer->getTrainingPokemon();
-        $second = $this->randomizer->getTrainingPokemon();
+        $first = $this->pokemonGenerator->getTrainingPokemon();
+        $second = $this->pokemonGenerator->getTrainingPokemon();
 
         $this->pokemonService->savePokemon($first);
         $this->pokemonService->savePokemon($second);

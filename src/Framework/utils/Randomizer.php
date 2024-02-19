@@ -9,37 +9,15 @@ use Acme\Framework\models\pokemon\{
 use Acme\Framework\interfaces\TraineePokemonInterface;
 use Acme\Framework\client\GuzzleHttpClient;
 use Acme\Framework\exceptions\InvalidPokemonIdException;
+use Acme\App\Contracts\PokemonGeneratorInterface;
 
-class Randomizer
+class Randomizer implements PokemonGeneratorInterface
 {
     /**
      * Http guzzle client
      * @var 
      */
     public $guzzleHttpClient;
-
-    private const POKEMON_ID_RANGE = [
-        'first_id' => 1,
-        'last_id' => 386
-    ];
-
-    /**
-     * first pokemon generation 
-     * @var int
-     */
-    private const FIRST_GENERATION = 1;
-
-    /**
-     * second pokemon generation 
-     * @var int
-     */
-    private const SECOND_GENERATION = 2;
-
-    /**
-     * second pokemon generation 
-     * @var int
-     */
-    private const THIRD_GENERATION = 3;
 
     public function __construct()
     {
@@ -180,12 +158,12 @@ class Randomizer
 
     private function getRandomSecondGenerationPokemonId(): int
     {
-        return $this->getRandomPokemonId(152, 256);
+        return $this->getRandomPokemonId(152, 251);
     }
 
     private function getRandomThirdGenerationPokemonId(): int
     {
-        return $this->getRandomPokemonId(257, 381);
+        return $this->getRandomPokemonId(252, 381);
     }
 
     public function getRandomPokemonId(int $minId = 1, int $maxId = 381): int

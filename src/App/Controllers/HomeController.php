@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Acme\App\Controllers;
 
-use Acme\Framework\utils\Randomizer;
-use Acme\Framework\TemplateEngine;
+use Acme\App\Contracts\PokemonGeneratorInterface;
+use Acme\Framework\Contracts\TemplateEngineInterface;
 use Acme\App\Services\ValidationService;
 
 class HomeController
@@ -14,8 +14,8 @@ class HomeController
     private const POKEMON_ID = "pokemonId";
 
     public function __construct(
-        private Randomizer $randomizer,
-        private TemplateEngine $views,
+        private PokemonGeneratorInterface $pokemonGenerator,
+        private TemplateEngineInterface $views,
         private ValidationService $validator
     ) {
     }
@@ -25,9 +25,9 @@ class HomeController
     public function home()
     {
         $pokemonId = $this->checkAndRetrieveParams();
-        $this->pokemonArray[] = $this->randomizer->getPokemon($pokemonId);
+        $this->pokemonArray[] = $this->pokemonGenerator->getPokemon($pokemonId);
 
-        echo $this->views->render("/home.php", [
+        $this->views->renderView("/home.php", [
             'pokemonArray'  => $this->pokemonArray,
             'title' => 'Pokemon App | Home'
         ]);
