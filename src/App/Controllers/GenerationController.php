@@ -8,7 +8,7 @@ use Acme\Framework\exceptions\InvalidPokemonIdException;
 
 class GenerationController
 {
-    
+
     private const POKEMON_GENERATION = 'pokemonGeneration';
     public function __construct(
         private PokemonGeneratorInterface $pokemonGenerator,

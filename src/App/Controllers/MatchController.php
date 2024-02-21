@@ -21,7 +21,7 @@ class MatchController
 
         $attempt = $this->matchService->startMatch($trainingPokemons);
 
-        echo $this->views->renderView('/match.php', [
+        $this->views->renderView('/match.php', [
             'pokemonArray' => $trainingPokemons,
             'attempt' => $attempt,
             'title' => 'Pokemon App | Match'
