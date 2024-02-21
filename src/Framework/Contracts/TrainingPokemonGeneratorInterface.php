@@ -8,5 +8,5 @@ use Acme\Framework\interfaces\TraineePokemonInterface;
 
 interface TrainingPokemonGeneratorInterface
 {
-    public function getTrainingPokemon(string|int $slug = null, int $generation = null): TraineePokemonInterface;
+    public function getPokemon(string|int $slug = null, int $generation = null): TraineePokemonInterface;
 }

@@ -20,8 +20,8 @@ class MatchService
 
     public function createTrainingPokemonsForMatch(): array
     {
-        $first = $this->trainingPokemonGenerator->getTrainingPokemon();
-        $second = $this->trainingPokemonGenerator->getTrainingPokemon();
+        $first = $this->trainingPokemonGenerator->getPokemon();
+        $second = $this->trainingPokemonGenerator->getPokemon();
 
         $this->pokemonService->savePokemon($first);
         $this->pokemonService->savePokemon($second);

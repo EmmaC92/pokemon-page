@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Acme\Framework\utils;
 
 use Acme\Framework\Contracts\TrainingPokemonGeneratorInterface;
-use Acme\Framework\interfaces\TraineePokemonInterface;
 use Acme\Framework\utils\Randomizer;
 use Acme\Framework\models\pokemon\TrainingPokemon;
 
 class TrainingPokemonGenerator extends Randomizer implements TrainingPokemonGeneratorInterface
 {
-    public function getTrainingPokemon(string|int $slug = null, int $generation = null): TraineePokemonInterface
+    public function getPokemon(string|int $slug = null, int $generation = null): TrainingPokemon
     {
         $arrayParameters = parent::getPokemonParameters($slug, $generation);
 
