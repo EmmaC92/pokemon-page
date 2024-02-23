@@ -1,8 +1,16 @@
 <div>
-    <h1>Moves</h1>
-    <?php foreach ($attempt as $attack) : ?>
+    <h1>
+        Moves
+    </h1>
+    {% for attack in attempt %}
         <strong>
-            <?php echo "{$attack['pokemon']}: {$attack['attack']} | {$attack['value']}." ?><br>
-        </strong>
-    <?php endforeach; ?>
-</div>
+            {{ attack['pokemon'] }}
+            : 
+            {{ attack['attack'] }}
+            | 
+            {{ attack['value'] }}
+            .
+            <br></strong>
+        {% endfor %}
+    </div>
+    

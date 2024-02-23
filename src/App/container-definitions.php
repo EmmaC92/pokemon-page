@@ -8,6 +8,7 @@ use Acme\Framework\utils\TrainingPokemonGenerator;
 use Acme\App\Config\Paths;
 use Acme\Framework\{
     TemplateEngine,
+    TwigTemplateEngine,
     Container,
     Database,
 };
@@ -39,7 +40,7 @@ use Acme\App\Repository\{
  * Utils and Fremework instances
  */
 $utils = [
-    TemplateEngineInterface::class => fn () => new TemplateEngine(Paths::VIEW),
+    TemplateEngineInterface::class => fn () => new TwigTemplateEngine(Paths::VIEW),
     PokemonGeneratorInterface::class => fn () => new Randomizer(),
     TrainingPokemonGeneratorInterface::class => fn () => new TrainingPokemonGenerator(),
     Database::class => fn () => new Database(
